@@ -1,1 +1,7 @@
-flask
+beautifulsoup4
+scrapy
+pyyaml
+pandas
+ruff
+pytest
+pytest-cov
