@@ -7,10 +7,10 @@ from scrapy_splash import SplashRequest
 
 from ..items import EpisodeItem
 
+    output_path = Path() / "data" / "episodes"
 
 class EpisodeScraper(scrapy.Spider):
     name = "episode"
-    output_path = Path() / "data" / "episodes"
     allowed_domains = ["toresaid.com"]
     start_urls = [
         "https://toresaid.com/episodeList.cshtml",
@@ -49,6 +49,7 @@ class EpisodeScraper(scrapy.Spider):
         itl.add_xpath(
             "url", "//a[contains(@href, 'api/episode/printtranscript')]/@href",
         )
+
         episode = itl.load_item()
         return episode
 
