@@ -60,3 +60,9 @@ class EpisodeItem(scrapy.Item):
     )
 
     file = scrapy.Field()
+    document_type = scrapy.Field(
+        output_processor=TakeFirst(),
+    )
+    episode_date = scrapy.Field(
+        output_processor=TakeFirst(),
+    )

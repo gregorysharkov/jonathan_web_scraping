@@ -28,13 +28,6 @@ class EpisodeScraper(scrapy.Spider):
 
     def __init__(self, name=None, **kwargs):
         super().__init__(name, **kwargs)
-        self.custom_settings = {
-            "FEEDS": {
-                self.metadata_store_path: {
-                    "format": "json",
-                },
-            },
-        }
 
         self.log(f"{self.custom_settings=}")
 
@@ -59,6 +52,7 @@ class EpisodeScraper(scrapy.Spider):
                 title=episode["title"],
                 relative=False,
             )
+            episode_date = self.get_episode_date(episode["title"])
 
             if not file_path.exists():
                 yield Request(
@@ -67,6 +61,8 @@ class EpisodeScraper(scrapy.Spider):
                     cb_kwargs={"title": episode["title"]},
                 )
 
+            episode["file"] = str(file_path)
+            episode["episode_date"] = episode_date
             yield episode
 
     def parse_episode(self, episode_container, idx: int):
@@ -84,6 +80,7 @@ class EpisodeScraper(scrapy.Spider):
             "url",
             ".//a[contains(@href, 'api/episode/printtranscript')]/@href",
         )
+        itl.add_value("document_type", "pdf")
 
         episode = itl.load_item()
 
@@ -116,6 +113,12 @@ class EpisodeScraper(scrapy.Spider):
         """gets the filename from a given title"""
 
         return f"{title[:20]}.pdf"
+
+    @staticmethod
+    def get_episode_date(title: str) -> str:
+        """gets episode date from the title"""
+
+        return title.split("_-_")[0]
 
     def _get_filepath(self, title: str, relative=False) -> Path:
         """
