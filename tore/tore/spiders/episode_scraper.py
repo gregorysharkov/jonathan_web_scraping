@@ -33,7 +33,6 @@ class EpisodeScraper(scrapy.Spider):
 
     def start_requests(self):
         url = self.start_urls[0]
-        self.log(f"Going for page {url}")
         request = SplashRequest(
             url=url,
             callback=self.parse,
