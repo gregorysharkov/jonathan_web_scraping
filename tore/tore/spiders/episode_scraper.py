@@ -81,6 +81,7 @@ class EpisodeScraper(scrapy.Spider):
             ".//a[contains(@href, 'api/episode/printtranscript')]/@href",
         )
         itl.add_value("document_type", "pdf")
+        itl.add_value("source", "https://toresaid.com/")
 
         episode = itl.load_item()
 
@@ -111,7 +112,6 @@ class EpisodeScraper(scrapy.Spider):
     @staticmethod
     def get_filename(title: str) -> str:
         """gets the filename from a given title"""
-
         return f"{title[:20]}.pdf"
 
     @staticmethod

@@ -66,3 +66,7 @@ class EpisodeItem(scrapy.Item):
     episode_date = scrapy.Field(
         output_processor=TakeFirst(),
     )
+
+    source = scrapy.Field(
+        output_processor=TakeFirst(),
+    )
