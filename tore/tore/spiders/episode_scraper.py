@@ -7,7 +7,7 @@ from scrapy_splash import SplashRequest
 
 from ..items import EpisodeItem
 
-    output_path = Path() / "data" / "episodes"
+    # output_path = Path() / "data" / "episodes"
 
 class EpisodeScraper(scrapy.Spider):
     name = "episode"
@@ -47,7 +47,7 @@ class EpisodeScraper(scrapy.Spider):
         itl.add_xpath("title", ".//h4")
         itl.add_xpath("summary", ".//p/text()")
         itl.add_xpath(
-            "url", "//a[contains(@href, 'api/episode/printtranscript')]/@href",
+            "url", ".//a[contains(@href, 'api/episode/printtranscript')]/@href",
         )
 
         episode = itl.load_item()
