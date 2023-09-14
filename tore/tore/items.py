@@ -58,3 +58,5 @@ class EpisodeItem(scrapy.Item):
     url = scrapy.Field(
         output_processor=TakeFirst(),
     )
+
+    file = scrapy.Field()
