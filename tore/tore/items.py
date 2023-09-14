@@ -56,5 +56,5 @@ class EpisodeItem(scrapy.Item):
         output_processor=TakeFirst(),
     )
     url = scrapy.Field(
-        inputProcessor=TakeFirst(),
+        output_processor=TakeFirst(),
     )
