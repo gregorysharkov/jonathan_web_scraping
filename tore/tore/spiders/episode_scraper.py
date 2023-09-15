@@ -14,6 +14,7 @@ ALLOWED_DOMAINS = ["toresaid.com"]
 class EpisodeScraper(scrapy.Spider):
     name = EPISODES_NAME
     allowed_domains = ALLOWED_DOMAINS
+
     start_urls = [
         "https://toresaid.com/episodeList.cshtml",
     ]
@@ -48,6 +49,7 @@ class EpisodeScraper(scrapy.Spider):
         """get list of episodes to be parsed and parse each one"""
         episode_list = response.xpath("//div[contains(@class, 'u-list-item')]")[:3]
 
+
         for episode_container in episode_list:
             episode = self.parse_episode(episode_container)
             self.log(f"{episode}")
@@ -74,3 +76,4 @@ class EpisodeScraper(scrapy.Spider):
 
         episode = itl.load_item()
         return episode
+
