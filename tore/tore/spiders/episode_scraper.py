@@ -44,27 +44,18 @@ class EpisodeScraper(scrapy.Spider):
         """get list of episodes to be parsed and parse each one"""
         episode_list = response.xpath("//div[contains(@class, 'u-list-item')]")[:3]
 
-        for idx, episode_container in enumerate(episode_list):
-            episode = self.parse_episode(episode_container, idx)
-            episode_url = "/".join(self.start_urls[0].split("/")[:-1]) + episode["url"]
-            file_path = self._get_filepath(
-                title=episode["title"],
-                relative=False,
-            )
-            episode_date = self.get_episode_date(episode["title"])
+        for episode_container in episode_list:
+            episode = self.parse_episode(episode_container)
 
-            if not file_path.exists():
+            if not Path(episode["file"]).exists():
                 yield Request(
-                    url=episode_url,
+                    url=episode["episode_url"],
                     callback=self.download_episode,
                     cb_kwargs={"title": episode["title"]},
                 )
-
-            episode["file"] = str(file_path)
-            episode["episode_date"] = episode_date
             yield episode
 
-    def parse_episode(self, episode_container, idx: int):
+    def parse_episode(self, episode_container):
         """parse single item in the article list"""
 
         itl = ItemLoader(
@@ -83,6 +74,17 @@ class EpisodeScraper(scrapy.Spider):
         itl.add_value("source", "https://toresaid.com/")
 
         episode = itl.load_item()
+
+        episode_url = "/".join(self.start_urls[0].split("/")[:-1]) + episode["url"]
+        file_path = self._get_filepath(
+            title=episode["title"],
+            relative=False,
+        )
+        episode_date = self.get_episode_date(episode["title"])
+
+        episode["episode_url"] = episode_url
+        episode["file"] = str(file_path)
+        episode["episode_date"] = episode_date
 
         return episode
 

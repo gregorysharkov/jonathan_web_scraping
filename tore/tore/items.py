@@ -58,7 +58,6 @@ class EpisodeItem(scrapy.Item):
     url = scrapy.Field(
         output_processor=TakeFirst(),
     )
-
     file = scrapy.Field()
     document_type = scrapy.Field(
         output_processor=TakeFirst(),
@@ -66,7 +65,12 @@ class EpisodeItem(scrapy.Item):
     episode_date = scrapy.Field(
         output_processor=TakeFirst(),
     )
-
+    episode_url = scrapy.Field(
+        output_processor=TakeFirst(),
+    )
     source = scrapy.Field(
+        output_processor=TakeFirst(),
+    )
+    episode_path = scrapy.Field(
         output_processor=TakeFirst(),
     )
