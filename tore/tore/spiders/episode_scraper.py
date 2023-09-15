@@ -71,7 +71,6 @@ class EpisodeScraper(scrapy.Spider):
         )
         itl.add_value("document_type", "pdf")
         itl.add_value("source", "https://toresaid.com")
-        itl.add_value("meta_name", self.name)
 
         episode = itl.load_item()
         return episode

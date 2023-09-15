@@ -26,12 +26,10 @@ DOWNLOADER_MIDDLEWARES = {
     "scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware": 810,
 }
 
-# Configure item pipelines
-# See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    # "scrapy.pipelines.files.FilesPipeline": 1
     "tore.pipelines.ToreItemExtractor": 100,
     "tore.pipelines.ToreFilesPipeline": 200,
+    "tore.pipelines.ToreItemCleanUp": 300,
 }
 
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"

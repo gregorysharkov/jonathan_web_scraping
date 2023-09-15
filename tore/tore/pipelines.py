@@ -13,7 +13,6 @@ from itemadapter import ItemAdapter
 from scrapy.pipelines.files import FilesPipeline
 
 # remove URL
-# remove meta_name
 # replace file_name with filename with the actual file name
 
 
@@ -41,7 +40,6 @@ class ToreItemExtractor(object):
     def _get_episode_path(self, episode) -> str:
         """returns path to the episode"""
 
-        meta_name = episode["meta_name"]
         episode_date = episode["episode_date"]
         episode_id = episode["url"].split("=")[-1]
 
@@ -61,5 +59,13 @@ class ToreFilesPipeline(FilesPipeline):
             yield scrapy.Request(file_url)
 
 
-# class ToreItemCleanUp(object):
-#     """remove technical item fields"""
+class ToreItemCleanUp(object):
+    """remove technical item fields"""
+
+    def process_item(self, item, spider):
+        """remove unused fields"""
+
+        adaptor = ItemAdapter(item)
+        del adaptor["url"]
+
+        return item
