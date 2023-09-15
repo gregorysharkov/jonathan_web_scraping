@@ -45,23 +45,21 @@ class ToreItemExtractor(object):
         episode_date = episode["episode_date"]
         episode_id = episode["url"].split("=")[-1]
 
-        return str(Path(f"data/{meta_name}/{episode_date} - {episode_id}.pdf"))
+        return str(Path(f"{episode_date} - {episode_id}.pdf"))
 
 
-# class ToreFilesPipeline(FilesPipeline):
-#     """second step: download file and save it with the appropriate name"""
+class ToreFilesPipeline(FilesPipeline):
+    """second step: download file and save it with the appropriate name"""
 
-#     def file_path(self, request, response=None, info=None, *, item=None):
-#         adapter = ItemAdapter(item)
-#         return Path(adapter["file_name"])
+    def file_path(self, request, response=None, info=None, *, item=None):
+        adapter = ItemAdapter(item)
+        return Path(adapter["file_name"])
 
-#     def get_media_requests(self, item, info):
-#         adapter = ItemAdapter(item)
-#         for file_url in adapter["file_urls"]:
-#             yield scrapy.Request(file_url)
+    def get_media_requests(self, item, info):
+        adapter = ItemAdapter(item)
+        for file_url in adapter["file_urls"]:
+            yield scrapy.Request(file_url)
 
 
 # class ToreItemCleanUp(object):
 #     """remove technical item fields"""
-
-#     ...

@@ -31,7 +31,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     # "scrapy.pipelines.files.FilesPipeline": 1
     "tore.pipelines.ToreItemExtractor": 100,
-    # "tore.pipelines.ToreFilesPipeline": 100,
+    "tore.pipelines.ToreFilesPipeline": 200,
 }
 
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"

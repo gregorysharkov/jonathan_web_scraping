@@ -52,12 +52,6 @@ class EpisodeScraper(scrapy.Spider):
             episode = self.parse_episode(episode_container)
             self.log(f"{episode}")
 
-            # if not Path(episode["file"]).exists():
-            #     yield Request(
-            #         url=episode["episode_url"],
-            #         callback=self.download_episode,
-            #         cb_kwargs={"title": episode["title"]},
-            #     )
             yield episode
 
     def parse_episode(self, episode_container):
@@ -80,53 +74,4 @@ class EpisodeScraper(scrapy.Spider):
         itl.add_value("meta_name", self.name)
 
         episode = itl.load_item()
-        # # TODO: move to item pipeline
-        # episode["file_name"] = str(self._get_filepath(relative=False))
-        # episode["episode_date"] = self._get_episode_date(episode["title"])
-        # episode["file_urls"] = [self._get_episode_url(episode)]
         return episode
-
-    # def download_episode(self, response, title: str):
-    #     """
-    #     save the file from from the response to the specific location
-    #     """
-
-    #     path = self._get_filepath(title, relative=False)
-    #     self.pdf_store_path.mkdir(parents=True, exist_ok=True)
-    #     with open(path, "wb") as file:
-    #         file.write(response.body)
-
-    @property
-    def _output_path(self):
-        return Path() / "tore" / "data"
-
-    @property
-    def pdf_store_path(self):
-        return self._output_path / self.name
-
-    @staticmethod
-    def _get_episode_date(title: str) -> str:
-        """gets episode date from the title"""
-
-        return title.split("_-_")[0]
-
-    # def _get_filepath(self, title: str, relative=False) -> Path:
-    def _get_filepath(self, relative=False) -> Path:
-        """
-        returns the pdf file path
-
-        Args:
-            title: title of the episode
-            relative: boolean flag whether return a relative path
-
-        Returns a path object
-        """
-        if relative:
-            return Path("data/") / self.name
-
-        return self.pdf_store_path
-
-    def _get_episode_url(self, episode) -> str:
-        """returns episode url for a given episode"""
-
-        return "/".join(self.start_urls[0].split("/")[:-1]) + episode["url"]
