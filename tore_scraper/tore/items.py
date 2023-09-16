@@ -60,7 +60,6 @@ class EpisodeItem(scrapy.Item):
     document_type = scrapy.Field(output_processor=TakeFirst())
     episode_path = scrapy.Field(output_processor=TakeFirst())
     episode_date = scrapy.Field(output_processor=TakeFirst())
-    # episode_url = scrapy.Field(output_processor=TakeFirst())
     file_name = scrapy.Field()
     file_urls = scrapy.Field()
     meta_name = scrapy.Field(output_processor=TakeFirst())
