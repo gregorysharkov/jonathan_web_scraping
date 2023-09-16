@@ -1,15 +1,17 @@
 from .episode_scraper import EpisodeScraper
 from ..items import EpisodeItem
 
+DOCUMENTARIES_NAME = "documentaries"
+
 
 class DocumentaryScraper(EpisodeScraper):
-    name = "documentaries"
+    name = f"{DOCUMENTARIES_NAME}"
     start_urls = [
         "https://toresaid.com/DocumList.cshtml",
     ]
     custom_settings = {
         "FEEDS": {
-            "tore/data/metadata/documentaries.json": {
+            f"tore/data/metadata/{DOCUMENTARIES_NAME}.json": {
                 "format": "json",
                 "item_classes": [
                     EpisodeItem,
@@ -17,4 +19,5 @@ class DocumentaryScraper(EpisodeScraper):
                 "overwrite": True,
             },
         },
+        "FILES_STORE": f"tore/data/{DOCUMENTARIES_NAME}",
     }

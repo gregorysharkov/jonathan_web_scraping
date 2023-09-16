@@ -1,15 +1,17 @@
 from .episode_scraper import EpisodeScraper
 from ..items import EpisodeItem
 
+MISCELLANEOUS_NAME = "miscellaneous"
 
-class StereoScraper(EpisodeScraper):
-    name = "stereo"
+
+class MiscellaneousScraper(EpisodeScraper):
+    name = f"{MISCELLANEOUS_NAME}"
     start_urls = [
-        "https://toresaid.com/StereoList.cshtml",
+        "https://toresaid.com/miscList.cshtml",
     ]
     custom_settings = {
         "FEEDS": {
-            "tore/data/metadata/stereo.json": {
+            f"tore/data/metadata/{MISCELLANEOUS_NAME}.json": {
                 "format": "json",
                 "item_classes": [
                     EpisodeItem,
@@ -17,4 +19,5 @@ class StereoScraper(EpisodeScraper):
                 "overwrite": True,
             },
         },
+        "FILES_STORE": f"tore/data/{MISCELLANEOUS_NAME}",
     }
