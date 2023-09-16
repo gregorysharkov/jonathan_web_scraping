@@ -1,8 +1,0 @@
-beautifulsoup4
-pyyaml
-pandas
-ruff
-pytest
-pytest-cov
-scrapy
-scrapy-splash
